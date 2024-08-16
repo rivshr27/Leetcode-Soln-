@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& arr) {
+        int n = arr.size();
+        int mini = INT_MAX;
+        int maxi = INT_MIN;
+        int minindex = -1;
+        int maxindex = -1;
+        for (int i = 0; i < n; i++) {
+            int tempmin = *min_element(arr[i].begin(), arr[i].end());
+            int tempmax = *max_element(arr[i].begin(), arr[i].end());
+            if (tempmin < mini) {
+                mini = tempmin;
+                minindex = i;
+            }
+            if (tempmax > maxi) {
+                maxi = tempmax;
+                maxindex = i;
+            }
+        }
+        if (minindex != maxindex) {
+            return maxi - mini;
+        } else {
+            int localmini = INT_MAX;
+            int localmaxi = INT_MIN;
+            for (int i = 0; i < n; i++) {
+                if (i != minindex) {
+                    int tempmin = *min_element(arr[i].begin(), arr[i].end());
+                    localmini = min(tempmin, localmini);
+                }
+                if (i != maxindex) {
+                    int tempmax = *max_element(arr[i].begin(), arr[i].end());
+                    localmaxi = max(tempmax, localmaxi);
+                }
+            }
+            int op1 = maxi - localmini;
+             int op2 = localmaxi - mini;
+            return max(op1,op2);
+        }
+        return 0;
+    }
+};
